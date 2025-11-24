@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -13,7 +14,7 @@ export default function Hero() {
           </div>
         </div>
         <div className="w-full md:w-1/3">
-          <img src="/hero-sample.jpg" alt="hero" className="w-full rounded" />
+          <Image src="/hero-sample.jpg" alt="hero" width={400} height={400} className="w-full rounded" />
         </div>
       </div>
     </section>

@@ -1,7 +1,9 @@
 import PostContent from "./postcontent";
 import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
+import { Post } from "@/types";
 
-export default function PostPageLayout({ post }: { post: any }) {
+export default function PostPageLayout({ post }: { post: Post }) {
   return (
     <div className="max-w-10xl mx-auto">
       <article className="prose dark:prose-invert max-w-none">
@@ -15,16 +17,18 @@ export default function PostPageLayout({ post }: { post: any }) {
         </div>
 
         {post.mainImage && (
-          // @ts-ignore
-          <img
+          <Image
             src={urlFor(post.mainImage).width(1600).url()}
             alt={post.title}
+            width={1600}
+            height={900}
             className="w-full aspect-video rounded-lg shadow-lg mt-8 object-cover"
           />
         )}
 
-        <div className="prose  dark:prose-invert max-w-none mt-8 dark:text-white">
-          <PostContent value={post.content || post.body} />
+        <div className="prose dark:prose-invert max-w-none mt-8 dark:text-white">
+          {/* ✅ Fix: fallback to empty array */}
+          <PostContent value={post.content || post.body || []} />
         </div>
       </article>
     </div>

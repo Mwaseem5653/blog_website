@@ -1,12 +1,13 @@
-'use client'; // client-side interactivity ke liye
+'use client'; 
 
 import { useState, useEffect } from 'react';
 import { client } from '@/sanity/lib/client';
 import { allPostsQuery } from '@/sanity/lib/query';
 import PostCard from '@/components/postcard';
+import { Post } from '@/types';
 
 export default function Home() {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [visibleCount, setVisibleCount] = useState(15);
   const [loading, setLoading] = useState(true);
 
@@ -33,9 +34,9 @@ export default function Home() {
               ) : (
                 <>
                   <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    {visiblePosts.map((post: any) => (
+                    {visiblePosts.map((post) => (
                       <PostCard 
-                              key={post.slug?.current || post._id || Math.random()} 
+                              key={post.slug?.current || post._id} 
                               post={post}
                             />
                                 ))}

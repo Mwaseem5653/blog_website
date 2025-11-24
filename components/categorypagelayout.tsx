@@ -1,6 +1,7 @@
 import PostList from "./postlist";
+import { Post } from "@/types";
 
-export default function CategoryPageLayout({ title, posts }: { title: string, posts: any[] }) {
+export default function CategoryPageLayout({ title, posts }: { title: string, posts: Post[] }) {
   return (
     <div>
       <header className="mb-6">

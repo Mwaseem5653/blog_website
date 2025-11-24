@@ -5,6 +5,10 @@ export const allPostsQuery = `*[_type=="post"]{
   category
 }`;
 
+export const allCategoriesQuery = `*[_type=="category"]{
+  "slug": slug.current
+}`;
+
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
   slug,

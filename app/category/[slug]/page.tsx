@@ -1,34 +1,37 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-import { client } from '@/sanity/lib/client';
-import { postsByCategoryQuery } from '@/sanity/lib/query';
-import PostCard from '@/components/postcard';
+import { client } from "@/sanity/lib/client";
+import { postsByCategoryQuery, allCategoriesQuery } from "@/sanity/lib/query";
+import PostCard from "@/components/postcard";
+import { Post } from "@/types";
 
-interface Params {
-  params: { slug: string };
+export async function generateStaticParams() {
+  const categories = await client.fetch(allCategoriesQuery);
+  return categories.map((category: { slug: string }) => ({
+    slug: category.slug,
+  }));
 }
 
-export default async function CategoryPage({ params }: Params) {
-  const { slug } = params;
-  console.log("Fetching posts for slug:", slug);
+// Fix: explicit type for params
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  const posts = await client.fetch(
+  const posts: Post[] = await client.fetch(
     postsByCategoryQuery,
     { slug },
     { cache: "no-store" }
   );
-  console.log("Fetched posts:", posts);
 
   return (
-    <div>
-      
-
+    <div className="container mx-auto px-4 py-6">
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {posts.length > 0 ? (
-          posts.map((post: any) => (
-            <PostCard key={post.slug.current} post={post} />
-          ))
+          posts.map((post) => <PostCard key={post.slug.current} post={post} />)
         ) : (
           <p>No posts found in this category.</p>
         )}

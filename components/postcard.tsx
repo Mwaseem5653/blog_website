@@ -1,23 +1,27 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Post } from "@/types";
 
-export default function PostCard({ post }: { post: any }) {
+export default function PostCard({ post }: { post: Post }) {
   return (
     <motion.article
       whileHover={{ y: -4 }}
       className="bg-white dark:bg-gray-800 mt-3 md:mt-0 rounded-xl shadow overflow-hidden flex flex-col"
     >
       {post.mainImage && (
-        // @ts-ignore
-                                      <img
-                                        src={urlFor(post.mainImage).width(1600).url()}
-                                        alt={post.title}
-                                        className="w-full aspect-video object-cover border-b border-gray-200 dark:border-gray-700"
-                                      />      )}
+        <Image
+          src={urlFor(post.mainImage).width(1600).url()}
+          alt={post.title}
+          width={1600}
+          height={900}
+          className="w-full aspect-video object-cover border-b border-gray-200 dark:border-gray-700"
+        />
+      )}
 
       <div className="p-4 flex flex-col flex-1 justify-between">
         <div>

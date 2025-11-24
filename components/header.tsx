@@ -28,6 +28,10 @@ const SOCIAL_LINKS = [
     { icon: InstagramIcon, name: "Instagram", url: "https://www.instagram.com" },
   ];
   
+interface SearchResult {
+  title: string;
+  slug: string;
+}
 
 export default function Header() {
   const pathname = usePathname();
@@ -35,15 +39,16 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
 
   useEffect(() => {
-    setOpen(false);
-    // Clear search when menu closes or route changes
-    setSearchQuery("");
-    setSearchResults([]);
-  }, [pathname]);
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [open]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -73,6 +78,7 @@ export default function Header() {
     setShowSearch(false); // Close search bar after navigation
     setSearchQuery(""); // Clear search query
     setSearchResults([]); // Clear search results
+    setOpen(false);
   };
 
   return (
@@ -139,7 +145,7 @@ export default function Header() {
                   {loadingSearch && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">...</span>}
                   {searchResults.length > 0 ? (
                     <div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {searchResults.map((post: any) => (
+                      {searchResults.map((post) => (
                         <div
                           key={post.slug}
                           className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
@@ -210,7 +216,7 @@ export default function Header() {
               {loadingSearch && <span className="block text-center py-2 text-gray-400">Searching...</span>}
               {searchResults.length > 0 ? (
                 <div className="mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                  {searchResults.map((post: any) => (
+                  {searchResults.map((post) => (
                     <div
                       key={post.slug}
                       className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
@@ -234,6 +240,7 @@ export default function Header() {
                   <Link
                     key={t.slug}
                     href={href}
+                    onClick={() => setOpen(false)}
                     className={clsx(
                       "block p-3 rounded hover:bg-gray-50 dark:hover:bg-gray-800",
                       active
