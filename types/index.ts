@@ -6,7 +6,12 @@ export interface Post {
   slug: {
     current: string;
   };
-  mainImage: SanityImageSource;
+  mainImage?: {
+    asset: {
+      url: string;
+    };
+    alt?: string;
+  };
   category: string;
   _id: string;
   excerpt?: string;
@@ -16,6 +21,7 @@ export interface Post {
   publishedAt?: string;
   content?: PortableTextBlock[];
   body?: PortableTextBlock[];
+  _updatedAt?: string; // Add this for sitemap lastModified
 }
 
 export interface Category {

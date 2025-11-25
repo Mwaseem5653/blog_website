@@ -19,7 +19,7 @@ export default function PostPageLayout({ post }: { post: Post }) {
         {post.mainImage && (
           <Image
             src={urlFor(post.mainImage).width(1600).url()}
-            alt={post.title}
+            alt={post.mainImage.alt || post.title}
             width={1600}
             height={900}
             className="w-full aspect-video rounded-lg shadow-lg mt-8 object-cover"

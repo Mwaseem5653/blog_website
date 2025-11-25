@@ -47,6 +47,14 @@ export default defineType({
       title: "Main Image",
       type: "image",
       options: { hotspot: true },
+      fields: [
+        {
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          description: "Describe the image for SEO",
+        },
+      ],
     }),
 
     defineField({
@@ -60,8 +68,7 @@ export default defineType({
           type: "string",
           validation: (Rule) => Rule.required(),
         },
-        
-             ],
+      ],
     }),
 
     defineField({
@@ -75,6 +82,34 @@ export default defineType({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
+    }),
+
+    // ✅ SEO Fields
+    defineField({
+      name: "seo",
+      title: "SEO Settings",
+      type: "object",
+      fields: [
+        {
+          name: "metaTitle",
+          title: "Meta Title",
+          type: "string",
+          description: "SEO title (appears in search results)",
+        },
+        {
+          name: "metaDescription",
+          title: "Meta Description",
+          type: "text",
+          description: "SEO description (appears in search results)",
+        },
+        {
+          name: "keywords",
+          title: "Keywords (optional)",
+          type: "array",
+          of: [{ type: "string" }],
+          description: "Target keywords for the blog post",
+        },
+      ],
     }),
   ],
 });
