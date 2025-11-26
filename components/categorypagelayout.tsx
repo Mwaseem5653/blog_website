@@ -1,5 +1,6 @@
 import PostList from "./postlist";
 import { Post } from "@/types";
+import AdUnit from "./addunits"; // Import AdUnit
 
 export default function CategoryPageLayout({ title, posts }: { title: string, posts: Post[] }) {
   return (
@@ -10,6 +11,11 @@ export default function CategoryPageLayout({ title, posts }: { title: string, po
       </header>
 
       <PostList posts={posts} />
+
+      {/* Ad Unit */}
+      <div className="mt-8">
+        <AdUnit slot="YOUR_CATEGORY_PAGE_SLOT_ID" />
+      </div>
     </div>
   );
 }

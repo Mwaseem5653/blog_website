@@ -3,6 +3,7 @@ import { client } from '@/sanity/lib/client';
 import { allPostsQuery } from '@/sanity/lib/query';
 import PostCard from '@/components/postcard';
 import { Post } from '@/types';
+import AdUnit from '@/components/addunits'; // Import AdUnit
 
 export const revalidate = 3600;
 
@@ -43,6 +44,11 @@ export default async function Home() {
           <PostCard key={post.slug?.current || post._id} post={post} />
         ))}
       </section>
+
+      {/* Ad Unit */}
+      <div className="mt-8">
+        <AdUnit slot="YOUR_HOME_PAGE_SLOT_ID" />
+      </div>
 
       {/* JSON-LD for Homepage */}
       <script

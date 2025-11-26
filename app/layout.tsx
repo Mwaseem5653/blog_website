@@ -1,7 +1,9 @@
+// app/layout.tsx (aapka code modify karke)
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -16,14 +18,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://glowguideblogs.vercel.app"), // ✅ FIXED WARNING
-
+  metadataBase: new URL("https://glowguideblogs.vercel.app"),
   title: {
     default: "Glow Guide Blogs",
     template: "%s | Glow Guide Blogs",
   },
-
-  description: "Beauty, skincare, health & lifestyle blogs to glow every day.",
+  description:
+    "Beauty, skincare, health & lifestyle blogs to glow every day.",
   openGraph: {
     type: "website",
     title: "Glow Guide Blogs",
@@ -46,6 +47,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google AdSense Script */}
+        <Script
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >

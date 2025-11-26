@@ -2,6 +2,7 @@ import PostContent from "./postcontent";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { Post } from "@/types";
+import AdUnit from "./addunits"; // Import AdUnit
 
 export default function PostPageLayout({ post }: { post: Post }) {
   return (
@@ -31,6 +32,11 @@ export default function PostPageLayout({ post }: { post: Post }) {
           <PostContent value={post.content || post.body || []} />
         </div>
       </article>
+
+      {/* Ad Unit */}
+      <div className="mt-8">
+        <AdUnit slot="YOUR_POST_PAGE_SLOT_ID" />
+      </div>
     </div>
   );
 }
