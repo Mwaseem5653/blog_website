@@ -17,7 +17,7 @@ export const allCategoriesQuery = `*[_type=="category"]{
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
-  "slug": slug.current,
+  slug,
   mainImage{asset->{url}},
   excerpt,
   publishedAt,

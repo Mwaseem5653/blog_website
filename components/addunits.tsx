@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface AdUnitProps {
   slot: string;
@@ -8,21 +8,13 @@ interface AdUnitProps {
 }
 
 export default function AdUnit({ slot, className = "" }: AdUnitProps) {
+  const insRef = useRef<HTMLModElement>(null);
+
   useEffect(() => {
     try {
-      // ✅ Only push if not already pushed
-      const ads = window.adsbygoogle || [];
-      if (ads.length === 0) {
-        window.adsbygoogle = ads;
-      }
-      // Check if current ins element already has ads
-      const insElements = document.getElementsByClassName("adsbygoogle");
-      for (let i = 0; i < insElements.length; i++) {
-        const ins = insElements[i] as HTMLElement & { pushed?: boolean };
-        if (!ins.dataset.processed) {
-          ads.push({});
-          ins.dataset.processed = "true"; // mark as processed
-        }
+      if (insRef.current && !insRef.current.dataset.processed) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        insRef.current.dataset.processed = "true";
       }
     } catch (e) {
       console.error("AdSense error:", e);
@@ -31,6 +23,7 @@ export default function AdUnit({ slot, className = "" }: AdUnitProps) {
 
   return (
     <ins
+      ref={insRef}
       className={`adsbygoogle ${className}`}
       style={{ display: "block" }}
       data-ad-client="ca-pub-5961112055480826"
