@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: '/studio',
     },
-    sitemap: 'https.glowguideblogs.vercel.app/sitemap.xml',
+    sitemap: 'https://glowguideblogs.vercel.app/sitemap.xml',
   };
 }

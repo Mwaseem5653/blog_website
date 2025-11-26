@@ -4,28 +4,24 @@ import { allPostsQuery, allCategoriesQuery } from "@/sanity/lib/query";
 export default async function sitemap() {
   const baseUrl = "https://glowguideblogs.vercel.app";
 
-  // Fetch all posts and categories from Sanity
+  // Fetch data
   const posts = await client.fetch(allPostsQuery);
   const categories = await client.fetch(allCategoriesQuery);
 
-  // Create URLs for each post
-  const postUrls = posts.map((post) => {
-    return {
-      url: `${baseUrl}/post/${post.slug.current}`,
-      lastModified: new Date(post._updatedAt).toISOString(),
-    };
-  });
+  // Post URLs
+  const postUrls = posts.map((post) => ({
+    url: `${baseUrl}/post/${post.slug.current}`,
+    lastModified: post._updatedAt,
+  }));
 
-  // Create URLs for each category
-  const categoryUrls = categories.map((category) => {
-    return {
-      url: `${baseUrl}/category/${category.slug}`,
-      lastModified: category.lastmod ? new Date(category.lastmod).toISOString() : new Date().toISOString(),
-    };
-  });
+  // Category URLs
+  const categoryUrls = categories.map((category) => ({
+    url: `${baseUrl}/category/${category.slug.current}`,
+    lastModified: new Date().toISOString(),
+  }));
 
   // Combine all URLs
-  const urls = [
+  return [
     {
       url: baseUrl,
       lastModified: new Date().toISOString(),
@@ -33,6 +29,4 @@ export default async function sitemap() {
     ...postUrls,
     ...categoryUrls,
   ];
-
-  return urls;
 }
