@@ -11,9 +11,9 @@ export default function AdUnit({ slot, className = "" }: AdUnitProps) {
   useEffect(() => {
     try {
       // ✅ Only push if not already pushed
-      const ads = (window as any).adsbygoogle || [];
+      const ads = window.adsbygoogle || [];
       if (ads.length === 0) {
-        (window as any).adsbygoogle = ads;
+        window.adsbygoogle = ads;
       }
       // Check if current ins element already has ads
       const insElements = document.getElementsByClassName("adsbygoogle");
