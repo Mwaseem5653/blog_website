@@ -2,7 +2,7 @@ export const allPostsQuery = `*[_type=="post"]{
   title,
   slug,
   "mainImage": contentBlocks[0].image,
-  excerpt,
+  "firstContentBlock": contentBlocks[0].content[0..1],
   publishedAt,
   category,
   "author": author{name}
@@ -18,7 +18,7 @@ export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
   slug,
   "mainImage": contentBlocks[0].image,
-  excerpt,
+  "firstContentBlock": contentBlocks[0].content[0..1],
   publishedAt,
   "author": author{name},
   category

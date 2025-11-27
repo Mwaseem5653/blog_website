@@ -18,7 +18,7 @@ export interface Post {
   }[];
   category: string;
   _id: string;
-  excerpt?: string;
+  firstContentBlock?: PortableTextBlock[];
   author?: {
     name: string;
   };
