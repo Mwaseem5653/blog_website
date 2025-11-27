@@ -17,20 +17,23 @@ export default function PostPageLayout({ post }: { post: Post }) {
           {post.publishedAt ? new Date(post.publishedAt).toDateString() : ""}
         </div>
 
-        {post.mainImage && (
-          <Image
-            src={urlFor(post.mainImage).width(1600).url()}
-            alt={post.mainImage.alt || post.title}
-            width={1600}
-            height={900}
-            className="w-full aspect-video rounded-lg shadow-lg mt-8 object-cover"
-          />
-        )}
+        {post.contentBlocks && post.contentBlocks.map((block, index) => (
+          <div key={index}>
+            {block.image && (
+              <Image
+                src={urlFor(block.image).width(1600).url()}
+                alt={block.image.alt || post.title}
+                width={1600}
+                height={900}
+                className="w-full aspect-video rounded-lg shadow-lg mt-8 object-cover"
+              />
+            )}
 
-        <div className="prose dark:prose-invert max-w-none mt-8 dark:text-white">
-          {/* ✅ Fix: fallback to empty array */}
-          <PostContent value={post.content || post.body || []} />
-        </div>
+            <div className="prose dark:prose-invert max-w-none mt-8 dark:text-white">
+              <PostContent value={block.content || []} />
+            </div>
+          </div>
+        ))}
       </article>
 
       {/* Ad Unit */}

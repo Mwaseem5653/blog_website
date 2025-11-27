@@ -15,10 +15,10 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {post.mainImage && (
         <Image
-          src={urlFor(post.mainImage).width(1600).url()}
-          alt={post.mainImage.alt || post.title}
-          width={1600}
-          height={900}
+          src={urlFor(post.mainImage).width(800).url()}
+          alt={post.title}
+          width={800}
+          height={450}
           className="w-full aspect-video object-cover border-b border-gray-200 dark:border-gray-700"
         />
       )}

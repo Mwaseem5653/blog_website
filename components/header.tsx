@@ -19,7 +19,7 @@ const TAB_ITEMS = [
   { title: "Hair Care", slug: "hair-care" },
   { title: "Acne", slug: "acne" },
   { title: "Whitening", slug: "whitening" },
-  { title: "Bridal", slug: "bridal" },
+  { title: "Health & Fitness", slug: "health-fitness" },
 ];
 
 const SOCIAL_LINKS = [

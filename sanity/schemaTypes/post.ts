@@ -36,7 +36,7 @@ export default defineType({
           { title: "Hair Care", value: "hair-care" },
           { title: "Acne", value: "acne" },
           { title: "Whitening", value: "whitening" },
-          { title: "Bridal", value: "bridal" },
+          { title: "Health & Fitness", value: "health-fitness" },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -71,9 +71,50 @@ export default defineType({
       ],
     }),
 
+    // ⭐ Content Area 1 (Required as original)
     defineField({
       name: "content",
       title: "Content",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+
+    // ⭐ Additional Image + Content Areas (Optional)
+    defineField({
+      name: "extraImage1",
+      title: "Extra Image 1",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "extraContent1",
+      title: "Extra Content 1",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+
+    defineField({
+      name: "extraImage2",
+      title: "Extra Image 2",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "extraContent2",
+      title: "Extra Content 2",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+
+    defineField({
+      name: "extraImage3",
+      title: "Extra Image 3",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "extraContent3",
+      title: "Extra Content 3",
       type: "array",
       of: [{ type: "block" }],
     }),
@@ -84,7 +125,7 @@ export default defineType({
       type: "datetime",
     }),
 
-    // ✅ SEO Fields
+    // ⭐ SEO Fields
     defineField({
       name: "seo",
       title: "SEO Settings",

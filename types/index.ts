@@ -6,12 +6,16 @@ export interface Post {
   slug: {
     current: string;
   };
-  mainImage?: {
-    asset: {
-      url: string;
+  mainImage?: SanityImageSource;
+  contentBlocks: {
+    image: {
+      asset: {
+        url: string;
+      };
+      alt?: string;
     };
-    alt?: string;
-  };
+    content: PortableTextBlock[];
+  }[];
   category: string;
   _id: string;
   excerpt?: string;
