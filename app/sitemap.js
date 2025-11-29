@@ -15,8 +15,9 @@ export default async function sitemap() {
   }));
 
   // Category URLs
-  const categoryUrls = categories.map((category) => ({
-    lastModified: category.lastmod, // Use the lastmod fetched from Sanity
+  const categoryUrls = categories.filter(c => c.slug).map((category) => ({
+    url: `${baseUrl}/category/${category.slug}`,
+    lastModified: category.lastmod,
   }));
 
   // Combine all URLs

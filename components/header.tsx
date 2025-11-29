@@ -93,6 +93,7 @@ export default function Header() {
                 alt="GlowGuideBlogs"
                 fill
                 priority
+                sizes="(max-width: 768px) 150px, 200px"
                 className="transition-transform duration-300 hover:scale-110 dark:invert object-contain"
               />
             </div>

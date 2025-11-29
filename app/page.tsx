@@ -47,7 +47,7 @@ export default async function Home() {
 
       {/* Ad Unit */}
       <div className="mt-8">
-        <AdUnit slot="9682322008" />
+        <AdUnit slot="9682322008" key="homepage-adunit" />
       </div>
 
       {/* JSON-LD for Homepage */}

@@ -1,11 +1,10 @@
-// app/layout.tsx (aapka code modify karke)
-import Script from "next/script";
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,19 +22,16 @@ export const metadata: Metadata = {
     default: "Glow Guide Blogs",
     template: "%s | Glow Guide Blogs",
   },
-  description:
-    "Beauty, skincare, health & lifestyle blogs to glow every day.",
+  description: "Beauty, skincare, health & lifestyle blogs to glow every day.",
   openGraph: {
     type: "website",
     title: "Glow Guide Blogs",
-    description: "Explore beauty and skincare content to help you glow every day.",
     url: "https://glowguideblogs.vercel.app",
     images: ["/default-og.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Glow Guide Blogs",
-    description: "Skincare & beauty blogs crafted for you.",
     images: ["/default-og.jpg"],
   },
 };
@@ -47,23 +43,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* Google AdSense Script */}
-        <Script
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
-          crossOrigin="anonymous"
-        />
-      </head>
+      {/* DO NOT PUT ANY SCRIPT TAGS HERE */}
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <Header />
+
         <main className="pt-8 pb-16 container mx-auto px-2 sm:px-3 lg:px-4">
           {children}
           <Analytics />
         </main>
+
         <Footer />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
+          crossOrigin="anonymous"
+        ></script>
       </body>
     </html>
   );

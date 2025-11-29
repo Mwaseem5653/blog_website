@@ -27,8 +27,23 @@ export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
 export const postBySlugQuery = `*[_type=="post" && slug.current == $slug][0]{
   title,
   "slug": slug.current,
-  mainImage,
-  content,
+  mainImage{
+    ...,
+    asset->{
+      ...,
+      "metadata": metadata
+    }
+  },
+  content[]{
+    ...,
+    _type == "image" => {
+      ...,
+      asset->{
+        ...,
+        "metadata": metadata
+      }
+    }
+  },
   extraImage1,
   extraContent1,
   extraImage2,
@@ -38,6 +53,7 @@ export const postBySlugQuery = `*[_type=="post" && slug.current == $slug][0]{
   category,
   "author": author{name},
   publishedAt,
+  _updatedAt,
   "seo": {
     "metaTitle": seo.metaTitle,
     "metaDescription": seo.metaDescription,

@@ -11,15 +11,22 @@ interface ImageValue {
 // Components object with proper typing
 const components: Partial<PortableTextComponents> = {
   types: {
-    image: ({ value }: PortableTextComponentProps<ImageValue>) => {
-      const src = urlFor(value).width(1200).url();
+    image: ({ value }: PortableTextComponentProps<ImageValue & { asset: { metadata: { dimensions: { width: number, height: number } } } }>) => {
+      if (!value?.asset) return null;
+
+      const { width, height } = value.asset.metadata.dimensions;
+      const blurUrl = urlFor(value).width(20).blur(10).url();
+
       return (
         <Image
-          src={src}
-          alt={value.alt || "image"}
-          width={1200}
-          height={800}
-          className="w-full rounded"
+          src={urlFor(value).width(1200).fit('max').auto('format').url()}
+          alt={value.alt || ''}
+          width={width}
+          height={height}
+          placeholder="blur"
+          blurDataURL={blurUrl}
+          className="w-full h-auto rounded-lg my-6"
+          sizes="(max-width: 800px) 100vw, 800px"
         />
       );
     },
