@@ -29,22 +29,20 @@ export default function PostPageLayout({ post }: { post: Post }) {
             alt={post.title}
             width={1600}
             height={900}
-            className="w-full aspect-video rounded-lg shadow-lg mt-8 object-cover"
+            className="w-full aspect-video rounded-lg shadow-lg my-8 object-cover"
             priority // Main image is high priority
           />
         )}
 
         {/* Main Content */}
         {post.content && (
-          <div className="prose dark:prose-invert max-w-none dark:text-white mb-1">
+          <div className="prose dark:prose-invert max-w-none dark:text-white ">
             <PostContent value={post.content} />
           </div>
         )}
 
         {/* Ad Unit after Main Content */}
-        <div className="my-4">
-          <AdUnit slot="9682322008" key={`${post.slug?.current}-adunit-1`} />
-        </div>
+        
 
         {/* Extra Image 1 and Content 1 */}
         {post.extraImage1 && (
@@ -53,12 +51,12 @@ export default function PostPageLayout({ post }: { post: Post }) {
             alt={`${post.title} extra image 1`}
             width={1600}
             height={900}
-            className="w-full aspect-video rounded-lg shadow-lg object-cover mt-1"
+            className="w-full aspect-video rounded-lg shadow-lg object-cover my-8 "
             sizes="(max-width: 800px) 100vw, 800px"
           />
         )}
         {post.extraContent1 && (
-          <div className="prose dark:prose-invert max-w-none dark:text-white mb-1">
+          <div className="prose dark:prose-invert max-w-none dark:text-white ">
             <PostContent value={post.extraContent1} />
           </div>
         )}
@@ -70,20 +68,18 @@ export default function PostPageLayout({ post }: { post: Post }) {
             alt={`${post.title} extra image 2`}
             width={1600}
             height={900}
-            className="w-full aspect-video rounded-lg shadow-lg object-cover mt-1"
+            className="w-full aspect-video rounded-lg shadow-lg object-cover my-8"
             sizes="(max-width: 800px) 100vw, 800px"
           />
         )}
         {post.extraContent2 && (
-          <div className="prose dark:prose-invert max-w-none dark:text-white mb-1">
+          <div className="prose dark:prose-invert max-w-none dark:text-white ">
             <PostContent value={post.extraContent2} />
           </div>
         )}
 
-        {/* Ad Unit after second block */}
-        <div className="my-4">
-          <AdUnit slot="9682322008" key={`${post.slug?.current}-adunit-2`} />
-        </div>
+        {/* Ad Unit after second block (conditional) */}
+       
         
         {/* Extra Image 3 and Content 3 */}
         {post.extraImage3 && (
@@ -92,15 +88,18 @@ export default function PostPageLayout({ post }: { post: Post }) {
             alt={`${post.title} extra image 3`}
             width={1600}
             height={900}
-            className="w-full aspect-video rounded-lg shadow-lg object-cover mt-1"
+            className="w-full aspect-video rounded-lg shadow-lg object-cover my-8"
             sizes="(max-width: 800px) 100vw, 800px"
           />
         )}
         {post.extraContent3 && (
-          <div className="prose dark:prose-invert max-w-none dark:text-white mb-1">
+          <div className="prose dark:prose-invert max-w-none dark:text-white ">
             <PostContent value={post.extraContent3} />
           </div>
         )}
+        <div className="my-4">
+          <AdUnit slot="9682322008" key={`${post.slug?.current}-adunit-1`} />
+        </div>
       </article>
     </div>
   );

@@ -8,11 +8,7 @@ export const allPostsQuery = `*[_type=="post"]{
   "author": author{name}
 }`;
 
-export const allCategoriesQuery = `*[_type=="category"]{
-  title,
-  "slug": slug.current,
-  "lastmod": *[_type == "post" && references(^._id)][0]._updatedAt
-}`;
+export const allCategoriesQuery = `*[_type == "post" && defined(category)].category`;
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
@@ -60,3 +56,17 @@ export const postBySlugQuery = `*[_type=="post" && slug.current == $slug][0]{
     "keywords": seo.keywords
   }
 }`;
+
+export const searchPostsQuery = `*[_type == "post" && (title match $searchTerm + "*" || excerpt match $searchTerm + "*")]{
+  title,
+  "slug": slug.current,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category,
+  "author": author{name}
+}[0...100]`; // Limit to 100 results for search page
+
+
+
+

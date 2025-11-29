@@ -12,7 +12,7 @@ import FacebookIcon from "./icons/facebook";
 import TwitterIcon from "./icons/twitter";
 import InstagramIcon from "./icons/instagram";
 
-import { client } from '@/sanity/lib/client'; // Import Sanity client
+
 
 const TAB_ITEMS = [
   { title: "All Posts", slug: "" },
@@ -55,11 +55,8 @@ export default function Header() {
     const delayDebounceFn = setTimeout(async () => {
       if (searchQuery.length > 2) { // Only search if query is at least 3 characters
         setLoadingSearch(true);
-        const query = `*[_type == "post" && title match "${searchQuery}*"][0...5]{
-          title,
-          "slug": slug.current
-        }`;
-        const results = await client.fetch(query);
+        const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+        const results = await response.json();
         setSearchResults(results);
         setLoadingSearch(false);
       } else {

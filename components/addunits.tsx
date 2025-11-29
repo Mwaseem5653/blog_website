@@ -16,11 +16,9 @@ interface AdUnitProps {
 
 export default function AdUnit({ slot, className = "" }: AdUnitProps) {
   const pathname = usePathname();
-  const adRef = useRef<HTMLInsElement>(null); // Use HTMLInsElement for the ins itself
+  const adRef = useRef<HTMLModElement>(null); // Use HTMLModElement for the ins itself
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
     const loadAd = () => {
       try {
         if (typeof window !== "undefined" && adRef.current) {
@@ -33,6 +31,9 @@ export default function AdUnit({ slot, className = "" }: AdUnitProps) {
           adRef.current.dataset.adStatus = '';
           adRef.current.dataset.adsbygoogleStatus = '';
 
+
+
+          // Push the ad
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         }
       } catch (e) {
@@ -40,16 +41,18 @@ export default function AdUnit({ slot, className = "" }: AdUnitProps) {
       }
     };
 
-    // Delay loading the ad slightly to allow DOM to settle
-    timer = setTimeout(loadAd, 500);
+    const timer = setTimeout(loadAd, 500);
+
+    // Capture adRef.current at the time of effect execution
+    const currentAdElement = adRef.current;
 
     // Cleanup function: This runs when the component unmounts or dependencies change
     return () => {
       clearTimeout(timer); // Clear timeout on cleanup
-      if (adRef.current) {
-        adRef.current.innerHTML = '';
-        adRef.current.dataset.adStatus = '';
-        adRef.current.dataset.adsbygoogleStatus = '';
+      if (currentAdElement) {
+        currentAdElement.innerHTML = '';
+        currentAdElement.dataset.adStatus = '';
+        currentAdElement.dataset.adsbygoogleStatus = '';
       }
     };
   }, [pathname]);

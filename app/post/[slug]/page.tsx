@@ -8,10 +8,18 @@ import { urlFor } from "@/sanity/lib/image";
 
 import type { Metadata } from "next";
 
-import type { Metadata } from "next";
+
+interface PortableTextChild {
+  text: string;
+}
+
+interface PortableTextBlock {
+  _type: string;
+  children?: PortableTextChild[];
+}
 
 // Helper to convert Sanity block content to a plain string
-function portableTextToString(blocks: any[]) {
+function portableTextToString(blocks: PortableTextBlock[]) {
   if (!blocks || !Array.isArray(blocks)) {
     return '';
   }
@@ -20,7 +28,7 @@ function portableTextToString(blocks: any[]) {
       if (block._type !== 'block' || !block.children) {
         return '';
       }
-      return block.children.map((child: any) => child.text).join('');
+      return block.children.map((child: PortableTextChild) => child.text).join('');
     })
     .join('\n\n');
 }
@@ -59,7 +67,7 @@ export async function generateMetadata(
       url: `https://glowguideblogs.vercel.app/post/${slug}`,
       type: "article",
       locale: "en_US",
-      site_name: "Glow Guide Blogs",
+      siteName: "Glow Guide Blogs",
       images: [
         {
           url: imageUrl,
@@ -69,12 +77,10 @@ export async function generateMetadata(
         },
       ],
       // Article specific OG tags
-      article: {
-        publishedTime: post.publishedAt,
-        modifiedTime: post._updatedAt,
-        authors: [post.author?.name || "Glow Guide Blogs"],
-        tags: post.seo?.keywords,
-      },
+      publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      authors: [post.author?.name || "Glow Guide Blogs"],
+      tags: post.seo?.keywords,
     },
     twitter: {
       card: "summary_large_image",

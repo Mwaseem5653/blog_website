@@ -48,6 +48,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        <link rel="alternate" type="application/rss+xml" title="Glow Guide Blogs RSS Feed" href="/rss.xml" />
         <Header />
 
         <main className="pt-8 pb-16 container mx-auto px-2 sm:px-3 lg:px-4">

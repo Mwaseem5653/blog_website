@@ -17,13 +17,35 @@ interface Category {
   slug: string;
 }
 
-// ✅ Metadata function
+// New helper function to fetch and process unique categories
+let uniqueCategoriesCache: Category[] | null = null;
+
+async function getUniqueCategories(): Promise<Category[]> {
+  if (uniqueCategoriesCache) {
+    return uniqueCategoriesCache;
+  }
+
+  // allCategoriesQuery now returns an array of strings (e.g., ["skin-care", "hair-care"])
+  const categoryStrings: string[] = await client.fetch(allCategoriesQuery);
+
+  // Process into unique Category objects with title derived from slug
+  const uniqueSlugs = Array.from(new Set(categoryStrings.filter(Boolean))); // Filter out null/undefined/empty strings
+
+  uniqueCategoriesCache = uniqueSlugs.map(slug => ({
+    slug: slug,
+    title: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') // Convert slug to Title Case
+  }));
+
+  return uniqueCategoriesCache;
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<DynamicPageParams> }
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
 
-  const categories: Category[] = await client.fetch(allCategoriesQuery);
+  const categories = await getUniqueCategories(); // Use new helper
   const category = categories.find((c) => c.slug === slug);
 
   if (!category) {
@@ -53,9 +75,10 @@ export async function generateMetadata(
   };
 }
 
+
 // ✅ Static Params
 export async function generateStaticParams() {
-  const categories: Category[] = await client.fetch(allCategoriesQuery);
+  const categories = await getUniqueCategories(); // Use new helper
   return categories.map((category) => ({
     slug: category.slug,
   }));
@@ -68,10 +91,11 @@ export default async function CategoryPage({
 }: {
   params: Promise<DynamicPageParams>;
 }) {
-  const { slug } = await params;
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
 
   const posts: Post[] = await client.fetch(postsByCategoryQuery, { slug }, { cache: "no-store" });
-  const categories: Category[] = await client.fetch(allCategoriesQuery);
+  const categories = await getUniqueCategories(); // Use new helper
   const category = categories.find((c) => c.slug === slug);
 
   return (
@@ -112,3 +136,5 @@ export default async function CategoryPage({
     </div>
   );
 }
+
+
