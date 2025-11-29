@@ -87,15 +87,13 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center gap-2 py-1">
           <Link href="/" className="flex gap-3">
-            <div>
+            <div className="relative w-[150px] h-[50px]">
               <Image
                 src="/headerlogoimage.png"
                 alt="GlowGuideBlogs"
-                width={150}
-                height={50}
+                fill
                 priority
                 className="transition-transform duration-300 hover:scale-110 dark:invert object-contain"
-                style={{ height: "auto" }}
               />
             </div>
           </Link>
