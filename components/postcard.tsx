@@ -21,6 +21,7 @@ export default function PostCard({ post }: { post: Post }) {
           alt={post.title}
           width={800}
           height={450}
+          priority
           className="w-full aspect-video object-cover border-b border-gray-200 dark:border-gray-700"
         />
       )}

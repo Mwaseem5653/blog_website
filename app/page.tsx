@@ -47,7 +47,8 @@ export default async function Home() {
 
       {/* Ad Unit */}
       <div className="mt-8">
-        <AdUnit slot="YOUR_HOME_PAGE_SLOT_ID" />
+        {/* TODO: Replace with your actual AdSense slot ID */}
+        <AdUnit slot="YOUR_AD_SLOT_ID" />
       </div>
 
       {/* JSON-LD for Homepage */}

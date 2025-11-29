@@ -94,7 +94,8 @@ export default function Header() {
                 width={150}
                 height={50}
                 priority
-                className="transition-transform duration-300 hover:scale-110 dark:invert"
+                className="transition-transform duration-300 hover:scale-110 dark:invert object-contain"
+                style={{ height: "auto" }}
               />
             </div>
           </Link>
