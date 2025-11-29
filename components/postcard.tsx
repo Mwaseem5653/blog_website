@@ -6,9 +6,10 @@ import { urlFor } from "@/sanity/lib/image";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Post } from "@/types";
-import PostContent from "./postcontent";
+
 
 export default function PostCard({ post }: { post: Post }) {
+  console.log("Post object in PostCard:", post);
   return (
     <motion.article
       whileHover={{ y: -4 }}
@@ -34,8 +35,8 @@ export default function PostCard({ post }: { post: Post }) {
           <h3 className="font-extrabold text-lg md:text-xl mt-2 leading-tight text-gray-900 dark:text-white">
             {post.title}
           </h3>
-          <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3 prose dark:prose-invert max-w-none">
-            <PostContent value={post.firstContentBlock || []} />
+          <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
+            <p>{post.excerpt}</p>
           </div>
         </div>
 

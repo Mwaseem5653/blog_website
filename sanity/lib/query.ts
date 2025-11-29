@@ -1,8 +1,8 @@
 export const allPostsQuery = `*[_type=="post"]{
   title,
   slug,
-  "mainImage": contentBlocks[0].image,
-  "firstContentBlock": contentBlocks[0].content[0..1],
+  mainImage,
+  excerpt,
   publishedAt,
   category,
   "author": author{name}
@@ -17,8 +17,8 @@ export const allCategoriesQuery = `*[_type=="category"]{
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
   slug,
-  "mainImage": contentBlocks[0].image,
-  "firstContentBlock": contentBlocks[0].content[0..1],
+  mainImage,
+  excerpt,
   publishedAt,
   "author": author{name},
   category
@@ -27,15 +27,20 @@ export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
 export const postBySlugQuery = `*[_type=="post" && slug.current == $slug][0]{
   title,
   "slug": slug.current,
-  contentBlocks[]{
-    image{asset->{url}, alt},
-    content[]{..., "asset": asset->}
-  },
-  category->{title, "slug": slug.current},
+  mainImage,
+  content,
+  extraImage1,
+  extraContent1,
+  extraImage2,
+  extraContent2,
+  extraImage3,
+  extraContent3,
+  category,
   "author": author{name},
   publishedAt,
   "seo": {
     "metaTitle": seo.metaTitle,
-    "metaDescription": seo.metaDescription
+    "metaDescription": seo.metaDescription,
+    "keywords": seo.keywords
   }
 }`;

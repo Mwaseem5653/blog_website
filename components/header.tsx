@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +11,7 @@ import ThemeToggle from "./themtoggle";
 import FacebookIcon from "./icons/facebook";
 import TwitterIcon from "./icons/twitter";
 import InstagramIcon from "./icons/instagram";
-import CircleIcon from "./circle-icon";
+
 import { client } from '@/sanity/lib/client'; // Import Sanity client
 
 const TAB_ITEMS = [
@@ -84,10 +85,18 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b dark:bg-gray-900/90 dark:border-gray-800">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between gap-4 py-3">
-          <Link href="/" className="flex items-center gap-2 text-2xl font-extrabold text-blue-700 dark:text-blue-400">
-            <CircleIcon size="w-6 h-6" outerColor="bg-blue-700" innerColor="bg-blue-300" />
-            GlowGuide
+        <div className="flex justify-between items-center gap-2 py-1">
+          <Link href="/" className="flex gap-3">
+            <div>
+              <Image
+                src="/headerlogoimage.png"
+                alt="GlowGuideBlogs"
+                width={150}
+                height={50}
+                priority
+                className="transition-transform duration-300 hover:scale-110 dark:invert"
+              />
+            </div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
@@ -101,15 +110,15 @@ export default function Header() {
                   className={clsx(
                     "relative px-2 py-1 font-medium transition-colors",
                     active
-                      ? "text-blue-700"
-                      : "text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
+                      ? "text-pink-600"
+                      : "text-gray-700 hover:text-pink-500 dark:text-gray-300 dark:hover:text-pink-400"
                   )}
                 >
                   {t.title}
                   {active && (
                     <motion.span
                       layoutId="underline"
-                      className="absolute left-0 right-0 -bottom-2 h-0.5 bg-blue-700 rounded"
+                      className="absolute left-0 right-0 -bottom-2 h-0.5 bg-pink-600 rounded"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.18 }}
@@ -163,7 +172,7 @@ export default function Header() {
                 </motion.div>
               ) : (
                 <button onClick={() => setShowSearch(true)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <SearchIcon className="w-5 h-5 text-gray-400" />
+                  <SearchIcon className="w-7 h-7 text-gray-400" />
                 </button>
               )}
             </AnimatePresence>
@@ -178,7 +187,7 @@ export default function Header() {
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500 transition-colors"
                 >
-                  <link.icon className="w-6 h-6" />
+                  <link.icon className="w-8 h-8" />
                 </a>
               ))}
             </div>
@@ -191,9 +200,9 @@ export default function Header() {
               className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               {open ? (
-                <XIcon className="w-6 h-6" />
+                <XIcon className="w-8 h-8" />
               ) : (
-                <MenuIcon className="w-6 h-6" />
+                <MenuIcon className="w-8 h-8" />
               )}
             </button>
           </div>
@@ -242,7 +251,7 @@ export default function Header() {
                     href={href}
                     onClick={() => setOpen(false)}
                     className={clsx(
-                      "block p-3 rounded hover:bg-gray-50 dark:hover:bg-gray-800",
+                      "block p-3 rounded hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-pink-500 hover:bg-pink-100",
                       active
                         ? "text-pink-600 bg-gray-100 dark:bg-gray-800"
                         : "text-gray-700 dark:text-gray-300"
@@ -262,7 +271,7 @@ export default function Header() {
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500 transition-colors"
                 >
-                  <link.icon className="w-6 h-6" />
+                  <link.icon className="w-8 h-8" />
                 </a>
               ))}
             </div>

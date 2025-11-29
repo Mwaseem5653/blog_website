@@ -11,7 +11,7 @@ import {structureTool} from 'sanity/structure'
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import {apiVersion, dataset, projectId} from './sanity/env'
 import post from './sanity/schemaTypes/post'
-import contentBlock from './sanity/schemaTypes/contentBlock'
+
 import {structure} from './sanity/structure'
 
 export default defineConfig({
@@ -20,7 +20,7 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema: {
-    types: [post, contentBlock],
+    types: [post],
   },
   plugins: [
     structureTool({structure}),

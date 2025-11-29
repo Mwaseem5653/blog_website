@@ -6,7 +6,7 @@ import { postBySlugQuery } from "@/sanity/lib/query";
 import PostPageLayout from "@/components/postpagelayout";
 import { urlFor } from "@/sanity/lib/image";
 
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 type DynamicPageParams = {
   slug: string;
@@ -31,6 +31,7 @@ export async function generateMetadata(
   return {
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt || post.title,
+    keywords: post.seo?.keywords,
     openGraph: {
       title: post.seo?.metaTitle || post.title,
       description: post.seo?.metaDescription || post.excerpt || post.title,
