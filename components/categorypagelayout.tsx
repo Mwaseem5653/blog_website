@@ -14,8 +14,7 @@ export default function CategoryPageLayout({ title, posts }: { title: string, po
 
       {/* Ad Unit */}
       <div className="mt-8">
-        {/* TODO: Replace with your actual AdSense slot ID */}
-        <AdUnit slot="YOUR_AD_SLOT_ID" />
+        <AdUnit slot="9682322008" />
       </div>
     </div>
   );

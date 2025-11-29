@@ -15,8 +15,7 @@ export default function PostList({ posts }: { posts: Post[] }) {
           {/* Add an AdUnit after every 3 posts */}
           {(index + 1) % 3 === 0 && (
             <div className="md:col-span-4 mt-4"> {/* Span full width for the ad */}
-              {/* TODO: Replace with your actual AdSense slot ID */}
-              <AdUnit slot="YOUR_AD_SLOT_ID" />
+              <AdUnit slot="9682322008" />
             </div>
           )}
         </>

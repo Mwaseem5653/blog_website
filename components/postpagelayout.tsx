@@ -39,8 +39,7 @@ export default function PostPageLayout({ post }: { post: Post }) {
 
         {/* Ad Unit after Main Content */}
         <div className="my-8">
-          {/* TODO: Replace with your actual AdSense slot ID */}
-          <AdUnit slot="YOUR_AD_SLOT_ID" />
+          <AdUnit slot="9682322008" />
         </div>
 
         {/* Extra Image 1 and Content 1 */}
@@ -77,8 +76,7 @@ export default function PostPageLayout({ post }: { post: Post }) {
 
         {/* Ad Unit after second block */}
         <div className="my-8">
-          {/* TODO: Replace with your actual AdSense slot ID */}
-          <AdUnit slot="YOUR_AD_SLOT_ID" />
+          <AdUnit slot="9682322008" />
         </div>
         
         {/* Extra Image 3 and Content 3 */}
