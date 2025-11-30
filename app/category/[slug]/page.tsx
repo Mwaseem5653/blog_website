@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { postsByCategoryQuery, allCategoriesQuery } from "@/sanity/lib/query";
 import PostCard from "@/components/postcard";
 import { Post } from "@/types";
+import { urlFor } from "@/sanity/lib/image";
 
 import type { Metadata } from "next";
 
