@@ -58,16 +58,26 @@ export async function generateMetadata(
   return {
     title: `${category.title} | Glow Guide Blogs`,
     description: `Read the latest ${category.title} tips, guides, and beauty blogs.`,
+    keywords: `${category.title}, ${category.title.toLowerCase()}, beauty blogs, glow guide blogs`,
     openGraph: {
       title: `${category.title} | Glow Guide Blogs`,
       description: `Explore beauty blogs and guides for ${category.title}.`,
       url: `https://glowguideblogs.vercel.app/category/${slug}`,
       type: "website",
+      images: [
+        {
+          url: "https://glowguideblogs.vercel.app/default-og.jpg", // Default OG image for category pages
+          width: 1200,
+          height: 630,
+          alt: `${category.title} Category`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${category.title} | Glow Guide Blogs`,
       description: `Beauty tips for ${category.title}.`,
+      images: ["https://glowguideblogs.vercel.app/default-og.jpg"], // Default Twitter image for category pages
     },
     alternates: {
       canonical: `https://glowguideblogs.vercel.app/category/${slug}`,
@@ -129,7 +139,20 @@ export default async function CategoryPage({
                               "@type": "ImageObject",
                               "url": "https://glowguideblogs.vercel.app/favicon.ico"
                             }
-                          }            }),
+                          },
+                          mainEntity: posts.map((post) => ({
+                            "@type": "BlogPosting",
+                            headline: post.title,
+                            url: `https://glowguideblogs.vercel.app/post/${post.slug.current}`,
+                            image: post.mainImage
+                              ? `https://glowguideblogs.vercel.app/_next/image?url=${encodeURIComponent(urlFor(post.mainImage).url())}&w=1200&q=75`
+                              : "https://glowguideblogs.vercel.app/default-og.jpg",
+                            author: { "@type": "Person", name: post.author?.name || "Glow Guide Blogs" },
+                            datePublished: post.publishedAt,
+                            dateModified: post._updatedAt,
+                            description: post.excerpt,
+                          })),
+            }),
           }}
         />
       )}

@@ -1,6 +1,8 @@
 import { client } from "@/sanity/lib/client";
 import { allPostsQuery, allCategoriesQuery } from "@/sanity/lib/query";
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function sitemap() {
   const baseUrl = "https://glowguideblogs.vercel.app";
 

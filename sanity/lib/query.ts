@@ -4,11 +4,16 @@ export const allPostsQuery = `*[_type=="post"]{
   mainImage,
   excerpt,
   publishedAt,
+  _updatedAt,
   category,
   "author": author{name}
 }`;
 
-export const allCategoriesQuery = `*[_type == "post" && defined(category)].category`;
+export const allCategoriesQuery = `*[_type=="category"]{
+  title,
+  "slug": slug.current,
+  "lastmod": max(*[_type=="post" && references(^._id)]._updatedAt)
+}`;
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
@@ -16,6 +21,7 @@ export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   mainImage,
   excerpt,
   publishedAt,
+  _updatedAt,
   "author": author{name},
   category
 }`;
