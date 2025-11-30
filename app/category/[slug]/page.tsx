@@ -22,37 +22,69 @@ interface Category {
 let uniqueCategoriesCache: Category[] | null = null;
 
 async function getUniqueCategories(): Promise<Category[]> {
+
   if (uniqueCategoriesCache) {
+
     return uniqueCategoriesCache;
+
   }
 
+
+
   // allCategoriesQuery now returns an array of strings (e.g., ["skin-care", "hair-care"])
+
   const categoryStrings: string[] = await client.fetch(allCategoriesQuery);
 
+
+
   // Process into unique Category objects with title derived from slug
+
   const uniqueSlugs = Array.from(new Set(categoryStrings.filter(Boolean))); // Filter out null/undefined/empty strings
 
+
+
   uniqueCategoriesCache = uniqueSlugs.map(slug => ({
+
     slug: slug,
+
     title: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') // Convert slug to Title Case
+
   }));
 
+
+
   return uniqueCategoriesCache;
+
 }
 
+
+
 export async function generateMetadata(
+
   { params }: { params: Promise<DynamicPageParams> }
+
 ): Promise<Metadata> {
+
   const resolvedParams = await params;
+
   const { slug } = resolvedParams;
 
+
+
   const categories = await getUniqueCategories(); // Use new helper
+
   const category = categories.find((c) => c.slug === slug);
 
+
+
   if (!category) {
+
     return {
+
       title: "Category Not Found | Glow Guide Blogs",
+
       description: "This category does not exist.",
+
     };
   }
 

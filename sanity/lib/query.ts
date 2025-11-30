@@ -9,11 +9,7 @@ export const allPostsQuery = `*[_type=="post"]{
   "author": author{name}
 }`;
 
-export const allCategoriesQuery = `*[_type=="category"]{
-  title,
-  "slug": slug.current,
-  "lastmod": *[_type=="post" && references(^._id)] | order(_updatedAt desc)[0]._updatedAt
-}`;
+export const allCategoriesQuery = `array::unique(*[_type == "post" && defined(category)].category)`;
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
