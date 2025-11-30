@@ -12,7 +12,7 @@ export const allPostsQuery = `*[_type=="post"]{
 export const allCategoriesQuery = `*[_type=="category"]{
   title,
   "slug": slug.current,
-  "lastmod": max(*[_type=="post" && references(^._id)]._updatedAt)
+  "lastmod": *[_type=="post" && references(^._id)] | order(_updatedAt desc)[0]._updatedAt
 }`;
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{

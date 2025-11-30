@@ -4,6 +4,7 @@ import { allPostsQuery } from '@/sanity/lib/query';
 import PostCard from '@/components/postcard';
 import { Post } from '@/types';
 import AdUnit from '@/components/addunits'; // Import AdUnit
+import { urlFor } from "@/sanity/lib/image"; // Import urlFor
 
 export const revalidate = 3600;
 
