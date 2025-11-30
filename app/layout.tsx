@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     title: "Glow Guide Blogs",
     images: ["/default-og.jpg"],
   },
+  verification: {
+    google: "T_y1sOLcDskGKX-ko7R8pnxqye2NuaB4ROmB5oTGEes",
+  },
 };
 
 export default function RootLayout({
