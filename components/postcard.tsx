@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Post } from "@/types";
 
-
 export default function PostCard({ post }: { post: Post }) {
   return (
     <motion.article
@@ -16,13 +15,8 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {post.mainImage && (
         <Image
-          src={(() => {
-            const imageUrl = urlFor(post.mainImage).width(800).url();
-            console.log("Image src imageUrl:", imageUrl); // Added log
-            // Ensure imageUrl is a string, otherwise provide a fallback empty string or a default image URL
-            return typeof imageUrl === 'string' ? imageUrl : '/default-image.jpg'; // Defensive check
-          })()}
-          alt={typeof post.title === 'string' ? post.title : ''}
+          src={urlFor(post.mainImage).width(800).url()}
+          alt={post.title ?? ""}
           width={800}
           height={450}
           priority
@@ -34,21 +28,22 @@ export default function PostCard({ post }: { post: Post }) {
         <div>
           {post.category && (
             <span className="text-xs font-semibold uppercase text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-              {typeof post.category === 'string' ? post.category.replace(/-/g, " ") : ''}
+              {post.category.replace(/-/g, " ")}
             </span>
           )}
+
           <h3 className="font-extrabold text-lg md:text-xl mt-2 leading-tight text-gray-900 dark:text-white">
-            {typeof post.title === 'string' ? post.title : ''}
+            {post.title}
           </h3>
+
           <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
-            <p>{typeof post.excerpt === 'string' ? post.excerpt : ''}</p>
+            <p>{post.excerpt ?? ""}</p>
           </div>
         </div>
 
-        {/* Bottom-right button */}
         <div className="flex justify-end mt-4">
           <Link
-            href={typeof post.slug?.current === 'string' ? `/post/${post.slug.current}` : '#'}
+            href={post.slug?.current ? `/post/${post.slug.current}` : "#"}
             className="flex items-center text-blue-700 dark:text-blue-400 font-semibold text-sm hover:underline"
           >
             View Post
