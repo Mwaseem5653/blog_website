@@ -9,7 +9,6 @@ import { Post } from "@/types";
 
 
 export default function PostCard({ post }: { post: Post }) {
-
   return (
     <motion.article
       whileHover={{ y: -4 }}
@@ -17,8 +16,10 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {post.mainImage && (
         <Image
-          src={urlFor(post.mainImage).width(800).url()}
-          alt={post.title}
+          src={(() => {
+            const imageUrl = urlFor(post.mainImage).width(800).url();
+            return imageUrl;})()}
+          alt={typeof post.title === 'string' ? post.title : ''}
           width={800}
           height={450}
           priority
