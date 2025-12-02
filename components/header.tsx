@@ -248,7 +248,7 @@ export default function Header() {
                     href={href}
                     onClick={() => setOpen(false)}
                     className={clsx(
-                      "block p-3 rounded hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-pink-500 hover:bg-pink-100",
+                      "block p-3 rounded hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-pink-500 ",
                       active
                         ? "text-pink-600 bg-gray-100 dark:bg-gray-800"
                         : "text-gray-700 dark:text-gray-300"
