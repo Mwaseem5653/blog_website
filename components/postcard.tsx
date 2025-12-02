@@ -13,7 +13,7 @@ export default function PostCard({ post }: { post: Post }) {
       whileHover={{ y: -4 }}
       className="bg-white dark:bg-gray-800 mt-3 md:mt-0 rounded-xl shadow overflow-hidden flex flex-col"
     >
-      {/* {post.mainImage && (
+      {post.mainImage && (
         <Image
           src={urlFor(post.mainImage).width(800).url()}
           alt={post.title ?? ""}
@@ -22,7 +22,7 @@ export default function PostCard({ post }: { post: Post }) {
           priority
           className="w-full aspect-video object-cover border-b border-gray-200 dark:border-gray-700"
         />
-      )} */}
+      )}
 
       <div className="p-4 flex flex-col flex-1 justify-between">
         <div>
