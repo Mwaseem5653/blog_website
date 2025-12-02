@@ -30,11 +30,11 @@ export default function PostCard({ post }: { post: Post }) {
         <div>
           {post.category && (
             <span className="text-xs font-semibold uppercase text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-              {post.category.replace(/-/g, " ")}
+              {typeof post.category === 'string' ? post.category.replace(/-/g, " ") : ''}
             </span>
           )}
           <h3 className="font-extrabold text-lg md:text-xl mt-2 leading-tight text-gray-900 dark:text-white">
-            {post.title}
+            {typeof post.title === 'string' ? post.title : ''}
           </h3>
           <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
             <p>{typeof post.excerpt === 'string' ? post.excerpt : ''}</p>
