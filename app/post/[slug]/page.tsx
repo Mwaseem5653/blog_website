@@ -1,13 +1,12 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { client } from "@/sanity/lib/client";
-import { postBySlugQuery } from "@/sanity/lib/query";
+import { postBySlugQuery, allPostSlugsQuery } from "@/sanity/lib/query";
 import PostPageLayout from "@/components/postpagelayout";
 import { urlFor } from "@/sanity/lib/image";
-
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
+// Revalidate the page every hour
+export const revalidate = 3600;
 
 interface PortableTextChild {
   text: string;
@@ -19,7 +18,7 @@ interface PortableTextBlock {
 }
 
 // Helper to convert Sanity block content to a plain string
-function portableTextToString(blocks: PortableTextBlock[]) {
+function portableTextToString(blocks: PortableTextBlock[]): string {
   if (!blocks || !Array.isArray(blocks)) {
     return '';
   }
@@ -37,102 +36,94 @@ type DynamicPageParams = {
   slug: string;
 };
 
-// ✅ DEEPLY ENHANCED METADATA
-export async function generateMetadata(
-  { params }: { params: Promise<DynamicPageParams> }
-): Promise<Metadata> {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+type Props = {
+  params: Promise<DynamicPageParams>;
+};
 
+// Generate static pages for all posts at build time
+export async function generateStaticParams() {
+  const posts = await client.fetch<{ slug: string }[]>(allPostSlugsQuery);
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// Generate metadata for the page
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const post = await client.fetch(postBySlugQuery, { slug });
 
   if (!post) {
     return {
-      title: "Post Not Found | Glow Guide Blogs",
-      description: "",
+      title: "Post Not Found",
     };
   }
 
   const imageUrl = post.mainImage
-    ? urlFor(post.mainImage).width(1200).url()
-    : "/default-og.jpg";
+    ? urlFor(post.mainImage).width(1200).height(630).url()
+    : "/og-image.jpg";
 
   return {
     title: post.seo?.metaTitle || post.title,
-    description: post.seo?.metaDescription || post.excerpt || post.title,
+    description: post.seo?.metaDescription || post.excerpt,
     keywords: post.seo?.keywords,
     openGraph: {
       title: post.seo?.metaTitle || post.title,
-      description: post.seo?.metaDescription || post.excerpt || post.title,
-      url: `https://glowguideblogs.vercel.app/post/${slug}`,
+      description: post.seo?.metaDescription || post.excerpt,
+      url: `/post/${slug}`,
       type: "article",
-      locale: "en_US",
-      siteName: "Glow Guide Blogs",
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-      // Article specific OG tags
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: post.title }],
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,
       authors: [post.author?.name || "Glow Guide Blogs"],
-      tags: post.seo?.keywords,
     },
     twitter: {
       card: "summary_large_image",
       title: post.seo?.metaTitle || post.title,
-      description: post.seo?.metaDescription || post.excerpt || post.title,
+      description: post.seo?.metaDescription || post.excerpt,
       images: [imageUrl],
-      creator: "@GlowGuideBlogs",
-      site: "@GlowGuideBlogs",
     },
     alternates: {
-      canonical: `https://glowguideblogs.vercel.app/post/${slug}`,
+      canonical: `/post/${slug}`,
     },
   };
 }
 
-// ✅ DYNAMIC POST PAGE
-export default async function PostPage(
-  { params }: { params: Promise<DynamicPageParams> }
-) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+// The main page component
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = await client.fetch(postBySlugQuery, { slug });
 
-  const post = await client.fetch(postBySlugQuery, { slug }, { cache: "no-store" });
-
-  if (!post) return <p>Post not found for slug: {slug}</p>;
+  if (!post) {
+    notFound(); // Triggers the 404 page
+  }
 
   const articleBody = portableTextToString(post.content);
   const wordCount = articleBody.split(/\s+/).filter(Boolean).length;
 
   const postImageUrl = post.mainImage
     ? urlFor(post.mainImage).width(1200).url()
-    : "https://glowguideblogs.vercel.app/default-og.jpg";
+    : "https://glowguideblogs.vercel.app/og-image.jpg";
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    mainEntityOfPage: {
+    "headline": post.title,
+    "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `https://glowguideblogs.vercel.app/post/${slug}`,
     },
-    wordCount: wordCount,
-    articleSection: post.category, // Add category as articleSection
-    articleBody: articleBody, // Add full article body
-    image: {
+    "wordCount": wordCount,
+    "articleSection": post.category,
+    "articleBody": articleBody,
+    "image": {
       "@type": "ImageObject",
-      url: postImageUrl,
-      width: post.mainImage?.asset?.metadata?.dimensions?.width || 1200,
-      height: post.mainImage?.asset?.metadata?.dimensions?.height || 630,
+      "url": postImageUrl,
+      "width": post.mainImage?.asset?.metadata?.dimensions?.width || 1200,
+      "height": post.mainImage?.asset?.metadata?.dimensions?.height || 630,
     },
-    author: { "@type": "Person", name: post.author?.name || "Glow Guide Blogs" },
-    publisher: {
+    "author": { "@type": "Person", "name": post.author?.name || "Glow Guide Blogs" },
+    "publisher": {
       "@type": "Organization",
       "name": "Glow Guide Blogs",
       "logo": {
@@ -140,21 +131,20 @@ export default async function PostPage(
         "url": "https://glowguideblogs.vercel.app/favicon.ico"
       }
     },
-    datePublished: post.publishedAt,
-    dateModified: post._updatedAt,
-    description: post.seo?.metaDescription || post.excerpt || post.title,
+    "datePublished": post.publishedAt,
+    "dateModified": post._updatedAt,
+    "description": post.seo?.metaDescription || post.excerpt,
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <>
       <PostPageLayout post={post} />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(jsonLd),
         }}
       />
-    </div>
+    </>
   );
 }

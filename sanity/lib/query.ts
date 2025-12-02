@@ -9,7 +9,11 @@ export const allPostsQuery = `*[_type=="post"]{
   "author": author{name}
 }`;
 
+export const allPostSlugsQuery = `*[_type=="post" && defined(slug.current)]{ "slug": slug.current }`;
+
 export const allCategoriesQuery = `array::unique(*[_type == "post" && defined(category)].category)`;
+
+export const allCategorySlugsQuery = `array::unique(*[_type == "post" && defined(category)].category)`;
 
 export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   title,
@@ -68,7 +72,3 @@ export const searchPostsQuery = `*[_type == "post" && (title match $searchTerm +
   category,
   "author": author{name}
 }[0...100]`; // Limit to 100 results for search page
-
-
-
-

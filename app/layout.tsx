@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script"; // Import the Script component
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -27,12 +28,12 @@ export const metadata: Metadata = {
     type: "website",
     title: "Glow Guide Blogs",
     url: "https://glowguideblogs.vercel.app",
-    images: ["/default-og.jpg"],
+    images: ["/og-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Glow Guide Blogs",
-    images: ["/default-og.jpg"],
+    images: ["/og-image.jpg"],
   },
   verification: {
     google: "T_y1sOLcDskGKX-ko7R8pnxqye2NuaB4ROmB5oTGEes",
@@ -44,14 +45,30 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Glow Guide Blogs",
+    "url": "https://glowguideblogs.vercel.app",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://glowguideblogs.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="en">
-      {/* DO NOT PUT ANY SCRIPT TAGS HERE */}
-
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <link rel="alternate" type="application/rss+xml" title="Glow Guide Blogs RSS Feed" href="/rss.xml" />
+        
         <Header />
 
         <main className="pt-8 pb-16 container mx-auto px-2 sm:px-3 lg:px-4">
@@ -60,11 +77,13 @@ export default function RootLayout({
         </main>
 
         <Footer />
-        <script
+        
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
           crossOrigin="anonymous"
-        ></script>
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
