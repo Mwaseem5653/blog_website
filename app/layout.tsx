@@ -40,6 +40,8 @@ export const metadata: Metadata = {
   },
 };
 
+import StyledComponentsRegistry from "@/lib/registry";
+
 export default function RootLayout({
   children,
 }: {
@@ -69,21 +71,23 @@ export default function RootLayout({
         />
         <link rel="alternate" type="application/rss+xml" title="Glow Guide Blogs RSS Feed" href="/rss.xml" />
         
-        <Header />
+        <StyledComponentsRegistry>
+          <Header />
 
-        <main className="pt-8 pb-16 container mx-auto px-2 sm:px-3 lg:px-4">
-          {children}
-          <Analytics />
-        </main>
+          <main className="pt-8 pb-16 container mx-auto px-2 sm:px-3 lg:px-4">
+            {children}
+            <Analytics />
+          </main>
 
-        <Footer />
-        
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+          <Footer />
+          
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5961112055480826"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
