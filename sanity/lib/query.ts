@@ -6,7 +6,7 @@ export const allPostsQuery = `*[_type=="post"]{
   publishedAt,
   _updatedAt,
   category,
-  "author": author{name}
+
 }`;
 
 export const allPostSlugsQuery = `*[_type=="post" && defined(slug.current)]{ "slug": slug.current }`;
@@ -22,7 +22,6 @@ export const postsByCategoryQuery = `*[_type == "post" && category == $slug]{
   excerpt,
   publishedAt,
   _updatedAt,
-  "author": author{name},
   category
 }`;
 
@@ -53,7 +52,6 @@ export const postBySlugQuery = `*[_type=="post" && slug.current == $slug][0]{
   extraImage3,
   extraContent3,
   category,
-  "author": author{name},
   publishedAt,
   _updatedAt,
   "seo": {
@@ -70,5 +68,5 @@ export const searchPostsQuery = `*[_type == "post" && (title match $searchTerm +
   excerpt,
   publishedAt,
   category,
-  "author": author{name}
+
 }[0...100]`; // Limit to 100 results for search page

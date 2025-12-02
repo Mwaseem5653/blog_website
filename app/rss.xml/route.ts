@@ -48,7 +48,7 @@ export async function GET() {
       description,
       url: `${siteUrl}/post/${post.slug.current}`,
       guid: `${siteUrl}/post/${post.slug.current}`,
-      author: post.author?.name || "Glow Guide Blogs",
+
       date: post.publishedAt || post._createdAt,
       enclosure: imageUrl
         ? { url: imageUrl, type: "image/jpeg" }

@@ -57,19 +57,7 @@ export default defineType({
       ],
     }),
 
-    defineField({
-      name: "author",
-      title: "Author Info",
-      type: "object",
-      fields: [
-        {
-          name: "name",
-          title: "Author Name",
-          type: "string",
-          validation: (Rule) => Rule.required(),
-        },
-      ],
-    }),
+    
 
     // ⭐ Content Area 1 (Required as original)
     defineField({

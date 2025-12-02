@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [{ url: imageUrl, width: 1200, height: 630, alt: post.title }],
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,
-      authors: [post.author?.name || "Glow Guide Blogs"],
+
     },
     twitter: {
       card: "summary_large_image",
@@ -122,7 +122,7 @@ export default async function PostPage({ params }: Props) {
       "width": post.mainImage?.asset?.metadata?.dimensions?.width || 1200,
       "height": post.mainImage?.asset?.metadata?.dimensions?.height || 630,
     },
-    "author": { "@type": "Person", "name": post.author?.name || "Glow Guide Blogs" },
+
     "publisher": {
       "@type": "Organization",
       "name": "Glow Guide Blogs",

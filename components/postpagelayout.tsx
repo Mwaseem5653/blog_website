@@ -17,10 +17,7 @@ export default function PostPageLayout({ post }: { post: Post }) {
           {post.title}
         </h1>
 
-        <div className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-          By {post.author?.name} •{" "}
-          {post.publishedAt ? new Date(post.publishedAt).toDateString() : ""}
-        </div>
+
 
         {/* Main Image */}
         {post.mainImage && (
