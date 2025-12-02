@@ -9,11 +9,6 @@ import { Post } from "@/types";
 
 
 export default function PostCard({ post }: { post: Post }) {
-  console.log("PostCard received post:", post);
-  console.log("PostCard post.title:", post.title);
-  console.log("PostCard post.category:", post.category);
-  console.log("PostCard post.excerpt:", post.excerpt);
-  console.log("PostCard post.slug.current:", post.slug?.current);
   return (
     <motion.article
       whileHover={{ y: -4 }}
@@ -21,9 +16,7 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {post.mainImage && (
         <Image
-          src={(() => {
-            const imageUrl = urlFor(post.mainImage).width(800).url();
-            console.log("PostCard imageUrl:", imageUrl); return imageUrl;})()}
+          src={urlFor(post.mainImage).width(800).url()}
           alt={typeof post.title === 'string' ? post.title : ''}
           width={800}
           height={450}
