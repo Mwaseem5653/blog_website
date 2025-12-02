@@ -9,7 +9,7 @@ import { Post } from "@/types";
 
 
 export default function PostCard({ post }: { post: Post }) {
-  console.log("Post object in PostCard:", post);
+
   return (
     <motion.article
       whileHover={{ y: -4 }}
@@ -37,7 +37,7 @@ export default function PostCard({ post }: { post: Post }) {
             {post.title}
           </h3>
           <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
-            <p>{post.excerpt}</p>
+            <p>{typeof post.excerpt === 'string' ? post.excerpt : ''}</p>
           </div>
         </div>
 
