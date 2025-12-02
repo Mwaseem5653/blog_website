@@ -16,7 +16,12 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {post.mainImage && (
         <Image
-          src={urlFor(post.mainImage).width(800).url()}
+          src={(() => {
+            const imageUrl = urlFor(post.mainImage).width(800).url();
+            console.log("Image src imageUrl:", imageUrl); // Added log
+            // Ensure imageUrl is a string, otherwise provide a fallback empty string or a default image URL
+            return typeof imageUrl === 'string' ? imageUrl : '/default-image.jpg'; // Defensive check
+          })()}
           alt={typeof post.title === 'string' ? post.title : ''}
           width={800}
           height={450}
