@@ -11,7 +11,7 @@ interface ImageValue {
 // Components object with proper typing
 const components: Partial<PortableTextComponents> = {
   types: {
-    image: ({ value }: PortableTextComponentProps<ImageValue & { asset: { metadata: { dimensions: { width: number, height: number } } } }>) => {
+    image: ({ value }) => {
       if (!value?.asset) return null;
 
       const { width, height } = value.asset.metadata.dimensions;
@@ -31,21 +31,29 @@ const components: Partial<PortableTextComponents> = {
       );
     },
   },
+
   block: {
-    h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
+    h2: ({ children }) => (
       <h2 className="text-2xl font-semibold mt-6">{children}</h2>
     ),
-    normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <p className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</p>
+
+    normal: ({ children }) => (
+      <p className="mt-3 text-gray-800 leading-7 dark:text-gray-200">
+        {children}
+      </p>
+    ),
+
+    // ✅ FIX: blockquote added
+    blockquote: ({ children }) => (
+      <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
+        {children}
+      </blockquote>
     ),
   },
+
   list: {
-    bullet: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <ul className="list-disc ml-6 mt-3">{children}</ul>
-    ),
-    number: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <ol className="list-decimal ml-6 mt-3">{children}</ol>
-    ),
+    bullet: ({ children }) => <ul className="list-disc ml-6 mt-3">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal ml-6 mt-3">{children}</ol>,
   },
 };
 

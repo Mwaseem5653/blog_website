@@ -6,7 +6,7 @@ import AdUnit from "./addunits"; // Import AdUnit
 import Breadcrumbs from "./breadcrumbs"; // Import Breadcrumbs
 
 export default function PostPageLayout({ post }: { post: Post }) {
-  console.log("Post data in layout:", post);
+  
   return (
     <div className="max-w-10xl mx-auto">
       <article className="prose dark:prose-invert max-w-none">
