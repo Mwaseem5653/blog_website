@@ -30,11 +30,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         <PostList posts={posts} />
       ) : (
         <div className="text-center text-gray-600 dark:text-gray-400">
-          <p className="text-xl mb-4">
+          <div className="text-xl mb-4">
             {query
               ? `No posts found matching "${query}".`
               : "Please enter a search term."}
-          </p>
+          </div>
           <Link href="/" className="text-blue-600 hover:underline">
             Go back to homepage
           </Link>

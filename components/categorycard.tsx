@@ -16,7 +16,7 @@ export default function CategoryCard({ category }: { category: Category }) {
         />
       )}
       <h3 className="mt-3 font-semibold text-lg">{category.title}</h3>
-      <p className="mt-1 text-sm text-gray-600">{category.description || `${category.title} tips & remedies`}</p>
+      <div className="mt-1 text-sm text-gray-600">{category.description || `${category.title} tips & remedies`}</div>
     </Link>
   );
 }

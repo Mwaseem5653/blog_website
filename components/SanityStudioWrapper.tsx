@@ -1,24 +1,23 @@
-'use client';
+'use client'
 
-import { NextStudio } from 'next-sanity/studio';
-import { type NextStudioProps } from 'next-sanity/studio';
-import { useMemo } from 'react';
+import { NextStudio } from 'next-sanity/studio'
+import { useMemo } from 'react'
+import config from '@/sanity.config'
 
-interface SanityStudioWrapperProps extends NextStudioProps {
-  disableTransition?: boolean;
-  params?: { [key: string]: string | string[] };
-  searchParams?: { [key: string]: string | string[] };
-  [key: string]: unknown; // Changed 'any' to 'unknown'
+interface SanityStudioWrapperProps {
+  config?: typeof config
+  disableTransition?: boolean   // incoming prop (safe)
 }
 
 export default function SanityStudioWrapper({
-  config,
-  disableTransition: _disableTransition, // Renamed to suppress warning
-  ..._restProps // Renamed to suppress warning
+  config: propConfig,
+  disableTransition: _disableTransition, // renamed, not forwarded
 }: SanityStudioWrapperProps) {
-  const memoizedConfig = useMemo(() => config, [config]);
+  const memoizedConfig = useMemo(() => propConfig || config, [propConfig])
 
   return (
-    <NextStudio config={memoizedConfig} />
-  );
+    <div suppressHydrationWarning>
+      <NextStudio config={memoizedConfig} />
+    </div>
+  )
 }

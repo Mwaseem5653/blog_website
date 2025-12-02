@@ -1,10 +1,12 @@
-// app/studio/[[...tool]]/page.tsx
-import config from '../../../sanity.config'
-import SanityStudioWrapper from '../../../components/SanityStudioWrapper' // Import the new wrapper
+'use client';
+import dynamic from 'next/dynamic';
+import config from '@/sanity.config'
 
-export { metadata, viewport } from 'next-sanity/studio'
+const SanityStudioWrapper = dynamic(
+  () => import('@/components/SanityStudioWrapper'),
+  { ssr: false } // only render on client
+);
 
 export default function StudioPage() {
-  // Pass the config to the wrapper. The wrapper will handle filtering any unwanted props.
-  return <SanityStudioWrapper config={config} />
+  return <SanityStudioWrapper config={config} />;
 }

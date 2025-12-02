@@ -37,7 +37,7 @@ export default function PostCard({ post }: { post: Post }) {
           </h3>
 
           <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
-            <p>{post.excerpt ?? ""}</p>
+            <div>{post.excerpt ?? ""}</div>
           </div>
         </div>
 

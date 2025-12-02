@@ -99,7 +99,7 @@ export default async function CategoryPage({ params }: Props) {
         {posts.length > 0 ? (
           posts.map((post) => <PostCard key={post.slug.current} post={post} />)
         ) : (
-          <p>No posts found in this category.</p>
+          <div>No posts found in this category.</div>
         )}
       </section>
 

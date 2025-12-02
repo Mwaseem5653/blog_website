@@ -163,7 +163,7 @@ export default function Header() {
                     </div>
                   ) : searchQuery.length > 2 && !loadingSearch && (
                     <div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      <p className="px-4 py-2 text-gray-500 dark:text-gray-400">No record found</p>
+                      <div className="px-4 py-2 text-gray-500 dark:text-gray-400">No record found</div>
                     </div>
                   )}
                 </motion.div>
@@ -234,7 +234,7 @@ export default function Header() {
                 </div>
               ) : searchQuery.length > 2 && !loadingSearch && (
                 <div className="mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                  <p className="px-4 py-2 text-gray-500 dark:text-gray-400">No record found</p>
+                  <div className="px-4 py-2 text-gray-500 dark:text-gray-400">No record found</div>
                 </div>
               )}
             </div>

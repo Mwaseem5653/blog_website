@@ -1,5 +1,5 @@
 import { PortableTextBlock } from "@portabletext/react";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { SanityImageSource } from "@sanity/image-url";
 
 export interface Post {
   title: string;
