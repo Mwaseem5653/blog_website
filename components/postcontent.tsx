@@ -42,9 +42,9 @@ const components: Partial<PortableTextComponents> = {
   block: {
     h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6">{children}</h2>,
 
-    // normal: ({ children }) => (
-    //   <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
-    // ),
+    normal: ({ children }) => (
+      <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
+    ),
 
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
@@ -56,6 +56,10 @@ const components: Partial<PortableTextComponents> = {
   list: {
     bullet: ({ children }) => <ul className="list-disc ml-6 mt-3">{children}</ul>,
     number: ({ children }) => <ol className="list-decimal ml-6 mt-3">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
   },
 };
 
