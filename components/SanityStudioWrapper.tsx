@@ -8,13 +8,13 @@ interface SanityStudioWrapperProps extends NextStudioProps {
   disableTransition?: boolean;
   params?: { [key: string]: string | string[] };
   searchParams?: { [key: string]: string | string[] };
-  [key: string]: any;
+  [key: string]: unknown; // Changed 'any' to 'unknown'
 }
 
 export default function SanityStudioWrapper({
   config,
-  disableTransition,
-  ...restProps
+  disableTransition: _disableTransition, // Renamed to suppress warning
+  ..._restProps // Renamed to suppress warning
 }: SanityStudioWrapperProps) {
   const memoizedConfig = useMemo(() => config, [config]);
 
