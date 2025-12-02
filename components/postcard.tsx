@@ -45,7 +45,7 @@ export default function PostCard({ post }: { post: Post }) {
         {/* Bottom-right button */}
         <div className="flex justify-end mt-4">
           <Link
-            href={`/post/${post.slug.current}`}
+            href={typeof post.slug?.current === 'string' ? `/post/${post.slug.current}` : '#'}
             className="flex items-center text-blue-700 dark:text-blue-400 font-semibold text-sm hover:underline"
           >
             View Post
