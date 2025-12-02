@@ -40,17 +40,17 @@ const components: Partial<PortableTextComponents> = {
   },
 
   block: {
-    h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6">{children}</h2>,
+    // h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6">{children}</h2>,
 
-    normal: ({ children }) => (
-      <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
-    ),
+    // normal: ({ children }) => (
+    //   <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
+    // ),
 
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
-        {children}
-      </blockquote>
-    ),
+    // blockquote: ({ children }) => (
+    //   <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
+    //     {children}
+    //   </blockquote>
+    // ),
   },
 
   list: {
