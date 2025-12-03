@@ -54,15 +54,17 @@ const components: Partial<PortableTextComponents> = {
     // Add handler for preformatted text (code blocks)
     pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
     unknown: ({ children }) => {
-      // Check if children contain script tags (case-insensitive)
-      const containsScriptTag = (child: React.ReactNode) =>
-        typeof child === 'string' && /<script\b[^>]*>.*?<\/script>/is.test(child);
+      const isHtmlString = (content: React.ReactNode) =>
+        typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content); // Check for basic HTML tag presence
 
-      if (Array.isArray(children) && children.some(containsScriptTag)) {
-        console.warn("PortableText encountered a script tag in an unknown block and will not render it for security reasons.", children);
-        return null;
-      } else if (!Array.isArray(children) && containsScriptTag(children)) {
-        console.warn("PortableText encountered a script tag in an unknown block and will not render it for security reasons.", children);
+      if (Array.isArray(children)) {
+        const htmlChildren = children.filter(isHtmlString);
+        if (htmlChildren.length > 0) {
+          console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Returning null to prevent crash. Problematic content:", htmlChildren);
+          return null;
+        }
+      } else if (isHtmlString(children)) {
+        console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Returning null to prevent crash. Problematic content:", children);
         return null;
       }
       return <div>{children}</div>; // Render other unknown content as a div
