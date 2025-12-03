@@ -54,17 +54,17 @@ const components: Partial<PortableTextComponents> = {
     // Add handler for preformatted text (code blocks)
     pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
     unknown: ({ children }) => {
-      const isHtmlString = (content: React.ReactNode) =>
-        typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content); // Check for basic HTML tag presence
+      const isHtmlString = (content: React.ReactNode): content is string =>
+        typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content);
 
       if (Array.isArray(children)) {
         const htmlChildren = children.filter(isHtmlString);
         if (htmlChildren.length > 0) {
-          const htmlString = htmlChildren.map(c => typeof c === 'string' ? c : '').join('');
+          const htmlString = htmlChildren.join(''); // Join already filtered strings
           console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", htmlString);
           return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
         }
-      } else if (isHtmlString(children)) {
+      } else if (isHtmlString(children)) { // TypeScript now knows 'children' is a string here
         console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", children);
         return <div dangerouslySetInnerHTML={{ __html: children }} />;
       }
