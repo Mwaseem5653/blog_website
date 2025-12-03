@@ -60,12 +60,13 @@ const components: Partial<PortableTextComponents> = {
       if (Array.isArray(children)) {
         const htmlChildren = children.filter(isHtmlString);
         if (htmlChildren.length > 0) {
-          console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Returning null to prevent crash. Problematic content:", htmlChildren);
-          return null;
+          const htmlString = htmlChildren.map(c => typeof c === 'string' ? c : '').join('');
+          console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", htmlString);
+          return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
         }
       } else if (isHtmlString(children)) {
-        console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Returning null to prevent crash. Problematic content:", children);
-        return null;
+        console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", children);
+        return <div dangerouslySetInnerHTML={{ __html: children }} />;
       }
       return <div>{children}</div>; // Render other unknown content as a div
     },
