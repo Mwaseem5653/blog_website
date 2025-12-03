@@ -7,6 +7,14 @@ import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Post } from "@/types";
 
+// Helper function to strip HTML tags
+function stripHtml(html: string | null | undefined): string {
+  if (!html) return "";
+  // This regex is intentionally simple to remove most HTML tags.
+  // For more robust HTML sanitization, a dedicated library would be needed.
+  return html.replace(/<[^>]*>?/gm, '');
+}
+
 export default function PostCard({ post }: { post: Post }) {
   return (
     <motion.article
@@ -37,7 +45,7 @@ export default function PostCard({ post }: { post: Post }) {
           </h3>
 
           <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-3">
-            <div>{post.excerpt ?? ""}</div>
+            <div>{stripHtml(post.excerpt)}</div>
           </div>
         </div>
 
