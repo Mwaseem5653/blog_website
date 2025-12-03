@@ -42,7 +42,7 @@ const components: Partial<PortableTextComponents> = {
   block: {
     h2: ({ children }) => {
       return <h2 className="text-2xl font-semibold mt-6">{children}</h2>;
-    },"text-2xl font-semibold mt-6">{children}</h2>,
+    },
 
     normal: ({ children }) => (
       <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
