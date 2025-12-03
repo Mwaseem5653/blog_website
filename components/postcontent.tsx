@@ -54,25 +54,18 @@ const components: Partial<PortableTextComponents> = {
     // Add handler for preformatted text (code blocks)
     pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
     unknown: ({ children }) => {
-      // PortableText children can be an array of nodes or a single node.
-      // If any child is a string that looks like HTML, dangerouslySetInnerHTML might be needed.
-      // This is a last resort to prevent React from throwing the error.
-      // NOTE: This can be a security risk if content is not sanitized.
-      if (Array.isArray(children)) {
-        const containsHtmlString = children.some(child => typeof child === 'string' && (child.includes('<') || child.includes('&')));
-        if (containsHtmlString) {
-          // Join the children into a single string and dangerouslySetInnerHTML
-          const htmlString = children.map(child => typeof child === 'string' ? child : '').join('');
-          if (htmlString) {
-            console.warn("PortableText encountered raw HTML in an unknown block and rendered it with dangerouslySetInnerHTML. Please ensure content is safe:", htmlString);
-            return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
-          }
-        }
-      } else if (typeof children === 'string' && (children.includes('<') || children.includes('&'))) {
-        console.warn("PortableText encountered raw HTML in an unknown block and rendered it with dangerouslySetInnerHTML. Please ensure content is safe:", children);
-        return <div dangerouslySetInnerHTML={{ __html: children }} />;
+      // Check if children contain script tags (case-insensitive)
+      const containsScriptTag = (child: React.ReactNode) =>
+        typeof child === 'string' && /<script\b[^>]*>.*?<\/script>/is.test(child);
+
+      if (Array.isArray(children) && children.some(containsScriptTag)) {
+        console.warn("PortableText encountered a script tag in an unknown block and will not render it for security reasons.", children);
+        return null;
+      } else if (!Array.isArray(children) && containsScriptTag(children)) {
+        console.warn("PortableText encountered a script tag in an unknown block and will not render it for security reasons.", children);
+        return null;
       }
-      return <div>{children}</div>;
+      return <div>{children}</div>; // Render other unknown content as a div
     },
     hardBreak: () => <br />, // Explicitly render hard breaks
   },
