@@ -14,6 +14,25 @@ interface ImageValue {
   alt?: string;
 }
 
+// Helper function to check if a ReactNode is an HTML string and render safely
+const renderChildrenSafely = (children: React.ReactNode, wrapperTag: string = 'div') => {
+  const isHtmlString = (content: React.ReactNode): content is string =>
+    typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content);
+
+  if (Array.isArray(children)) {
+    const htmlChildren = children.filter(isHtmlString);
+    if (htmlChildren.length > 0) {
+      const htmlString = htmlChildren.join('');
+      console.warn(`PortableText: Rendering raw HTML in ${wrapperTag} using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:`, htmlString);
+      return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+    }
+  } else if (isHtmlString(children)) {
+    console.warn(`PortableText: Rendering raw HTML in ${wrapperTag} using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:`, children);
+    return <div dangerouslySetInnerHTML={{ __html: children }} />;
+  }
+  return children; // Render as usual if not an HTML string
+};
+
 const components: Partial<PortableTextComponents> = {
   types: {
     image: ({ value }: { value: ImageValue }) => {
@@ -41,20 +60,20 @@ const components: Partial<PortableTextComponents> = {
 
   block: {
     h2: ({ children }) => {
-      return <h2 className="text-2xl font-semibold mt-6">{children}</h2>;
+      return <h2 className="text-2xl font-semibold mt-6">{renderChildrenSafely(children, 'h2')}</h2>;
     },
 
     normal: ({ children }) => (
-      <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
+      <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{renderChildrenSafely(children, 'div')}</div>
     ),
 
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
-        {children}
+        {renderChildrenSafely(children, 'blockquote')}
       </blockquote>
     ),
     // Add handler for preformatted text (code blocks)
-    pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
+    pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{renderChildrenSafely(children, 'pre')}</pre>,
     unknown: ({ children }) => {
       const isHtmlString = (content: React.ReactNode): content is string =>
         typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content);
@@ -76,7 +95,7 @@ const components: Partial<PortableTextComponents> = {
   },
   marks: {
     code: ({ children }) => {
-      return <code className="bg-gray-100 px-1 py-0.5 rounded text-sm dark:bg-gray-700 dark:text-gray-300">{children}</code>;
+      return <code className="bg-gray-100 px-1 py-0.5 rounded text-sm dark:bg-gray-700 dark:text-gray-300">{renderChildrenSafely(children, 'code')}</code>;
     },
   },
   list: {
@@ -89,10 +108,10 @@ const components: Partial<PortableTextComponents> = {
   },
   listItem: {
     bullet: ({ children }) => {
-      return <li>{children}</li>;
+      return <li>{renderChildrenSafely(children, 'li')}</li>;
     },
     number: ({ children }) => {
-      return <li>{children}</li>;
+      return <li>{renderChildrenSafely(children, 'li')}</li>;
     },
   },
 };
