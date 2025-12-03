@@ -40,32 +40,43 @@ const components: Partial<PortableTextComponents> = {
   },
 
   block: {
-    h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6">{children}</h2>,
+    h2: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <h2 className="text-2xl font-semibold mt-6">{children}</h2>;
+    },"text-2xl font-semibold mt-6">{children}</h2>,
 
-    normal: ({ children }) => (
-      <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>
-    ),
+    normal: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <div className="mt-3 text-gray-800 leading-7 dark:text-gray-200">{children}</div>;
+    },
 
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
-        {children}
-      </blockquote>
-    ),
+    blockquote: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return (
+        <blockquote className="border-l-4 border-gray-400 dark:border-gray-600 pl-4 italic my-4">
+          {children}
+        </blockquote>
+      );
+    },
     // Add handler for preformatted text (code blocks)
-    pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
+    pre: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>;
+    },
     unknown: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
       const isHtmlString = (content: React.ReactNode): content is string =>
         typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content);
 
       if (Array.isArray(children)) {
         const htmlChildren = children.filter(isHtmlString);
         if (htmlChildren.length > 0) {
-          const htmlString = htmlChildren.join(''); // Join already filtered strings
-          console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", htmlString);
+          const htmlString = htmlChildren.join('');
+          console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Rendering with dangerouslySetInnerHTML. Problematic content:", htmlString);
           return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
         }
-      } else if (isHtmlString(children)) { // TypeScript now knows 'children' is a string here
-        console.warn("PortableText: Rendering unhandled raw HTML using dangerouslySetInnerHTML. Please ensure content is safe to prevent XSS. Problematic content:", children);
+      } else if (isHtmlString(children)) {
+        console.error("PortableText: Unhandled raw HTML encountered in 'unknown' block. Rendering with dangerouslySetInnerHTML. Problematic content:", children);
         return <div dangerouslySetInnerHTML={{ __html: children }} />;
       }
       return <div>{children}</div>; // Render other unknown content as a div
@@ -73,19 +84,34 @@ const components: Partial<PortableTextComponents> = {
     hardBreak: () => <br />, // Explicitly render hard breaks
   },
   marks: {
-    // Add handler for inline code
-    code: ({ children }) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm dark:bg-gray-700 dark:text-gray-300">{children}</code>,
+    code: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <code className="bg-gray-100 px-1 py-0.5 rounded text-sm dark:bg-gray-700 dark:text-gray-300">{children}</code>;
+    },
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc ml-6 mt-3">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal ml-6 mt-3">{children}</ol>,
+    bullet: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <ul className="list-disc ml-6 mt-3">{children}</ul>;
+    },
+    number: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <ol className="list-decimal ml-6 mt-3">{children}</ol>;
+    },
   },
   listItem: {
-    bullet: ({ children }) => <li>{children}</li>,
-    number: ({ children }) => <li>{children}</li>,
+    bullet: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <li>{children}</li>;
+    },
+    number: ({ children }) => {
+      debugger; // <--- ADDED DEBUGGER
+      return <li>{children}</li>;
+    },
   },
 };
 
 export default function PostContent({ value }: { value: PortableTextBlock[] }) {
+  debugger; // <--- ADDED DEBUGGER
   return <PortableText value={value} components={components} />;
 }
