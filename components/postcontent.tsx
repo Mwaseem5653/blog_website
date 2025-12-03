@@ -51,10 +51,15 @@ const components: Partial<PortableTextComponents> = {
         {children}
       </blockquote>
     ),
+    // Add handler for preformatted text (code blocks)
+    pre: ({ children }) => <pre className="bg-gray-100 p-3 rounded-md overflow-x-auto dark:bg-gray-800 dark:text-gray-200">{children}</pre>,
     unknown: ({ children }) => <div>{children}</div>, // Handle unknown blocks as div
     hardBreak: () => <br />, // Explicitly render hard breaks
   },
-
+  marks: {
+    // Add handler for inline code
+    code: ({ children }) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm dark:bg-gray-700 dark:text-gray-300">{children}</code>,
+  },
   list: {
     bullet: ({ children }) => <ul className="list-disc ml-6 mt-3">{children}</ul>,
     number: ({ children }) => <ol className="list-decimal ml-6 mt-3">{children}</ol>,

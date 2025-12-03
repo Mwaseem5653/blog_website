@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     default: "Glow Guide Blogs",
     template: "%s | Glow Guide Blogs",
   },
-  description: "Beauty, skincare, health & lifestyle blogs to glow every day.",
+  description: "Beauty, skincare,haircare ,health & fitness blogs to glow every day.",
   openGraph: {
     type: "website",
     title: "Glow Guide Blogs",
